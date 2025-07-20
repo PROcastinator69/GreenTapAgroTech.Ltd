@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Discover GreenTap </title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@500;700&family=Open+Sans:wght@400;600&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://wallpaperaccess.com/full/5595412.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #2E7D32;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            max-height: 120px;
+            width: auto;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .card h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #90EE90;
+        }
+
+        .card p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .card ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .card li {
+            margin: 8px 0;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .card li::before {
+            content: '🌿';
+            position: absolute;
+            left: 0;
+            color: #2E7D32;
+        }
+
+        .card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 250px;
+            margin: 20px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            animation: popUp 1.2s ease-in-out;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes popUp {
+            from {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 28px;
+            }
+
+            .logo-img {
+                max-height: 100px;
+            }
+
+            .card {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="section-title">Unlock the Future of Farming with <img src="greenTap__2_-removebg-preview.png"
+                alt="GreenTap Logo" class="logo-img" /></h1>
+
+        <!-- Grid of Cards for PPT Content -->
+        <div class="grid-container">
+            <div class="card">
+                <h2>Who We Are</h2>
+                <p>Step into a world where innovation meets the soil—GreenTap Agrotech Ltd. is revolutionizing Indian
+                    farming with smart tech that empowers every farmer.</p>
+                <p>From small plots to vast fields, our tailored solutions make sustainable agriculture a reality,
+                    trusted by thousands nationwide.</p>
+                <img src="https://tse1.mm.bing.net/th/id/OIP.boDdQTpcyNSBCqflXWD-kwHaE7?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="GreenTap team innovating in agricultural technology" loading="lazy" />
+            </div>
+
+            <div class="card">
+                <h2>Why Efficient Irrigation Matters</h2>
+                <ul>
+                    <li>Save up to 70% water and combat scarcity.</li>
+                    <li>Boost yields with healthier, high-quality crops.</li>
+                    <li>Cut costs on labor and energy effortlessly.</li>
+                    <li>Thrive in any climate with resilient systems.</li>
+                </ul>
+                <div class="chart-container">
+                    <canvas id="benefitsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Our Irrigation Solutions</h2>
+                <ul>
+                    <li>Drip Systems for precise root delivery.</li>
+                    <li>Sprinklers for uniform coverage.</li>
+                    <li>Rain Guns for large-scale efficiency.</li>
+                    <li>Solar Pumps for eco-friendly power.</li>
+                    <li>Smart Controllers & Sensors.</li>
+                </ul>
+                <div class="chart-container">
+                    <canvas id="solutionsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Drip Irrigation Power</h2>
+                <p>Deliver water right to the roots, slashing waste and supercharging growth for vegetables, orchards,
+i           <img src="https://tse3.mm.bing.net/th/id/OIP.1xKh5f6_PwZI24lQWJNjggHaE8?rs=1&pid=ImgDetMain&o=7&rm=3">
+             </div>
+
+            <div class="card">
+                <h2>Sprinkler Systems</h2>
+                <p>Uniform watering like natural rain, perfect for cereals and nurseries with automated ease.</p>
+                <img src="https://tse2.mm.bing.net/th/id/OIP.WB4PW351_gSYgICFTcwkoAHaE8?w=1000&h=667&rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Sprinkler system providing uniform water distribution" loading="lazy" />
+            </div>
+
+            <div class="card">
+                <h2>Rain Gun Efficiency</h2>
+                <p>Cover acres with high-pressure precision, ideal for sugarcane and paddy.</p>
+                <img src="https://4.imimg.com/data4/DH/HB/MY-901630/rain-gun-for-irrigation-500x500.jpg"
+                    alt="Rain gun irrigating large farm area" loading="lazy" />
+            </div>
+
+            <div class="card">
+                <h2>Solar-Powered Pumps</h2>
+                <p>Go green and grid-free, reducing costs in remote areas with subsidy support.</p>
+                <img src="https://tse1.mm.bing.net/th/id/OIP.JvRY2_XOtz_1dW8EDlgigwHaEU?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Solar-powered irrigation pump in action" loading="lazy" />
+            </div>
+
+            <div class="card">
+                <h2>Smart Tools</h2>
+                <p>Control from your phone with real-time alerts and weather smarts.</p>
+                <img src="https://tse2.mm.bing.net/th/id/OIP.oAbxpgeyUnB7sZrRzwgjMgHaD0?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Mobile app controlling smart irrigation" loading="lazy" />
+            </div>
+
+            <div class="card">
+                <h2>Expert Field Support</h2>
+                <ul>
+                    <li>Custom layouts for your farm.</li>
+                    <li>Free water assessments.</li>
+                    <li>Vendor recommendations.</li>
+                    <li>Subsidy guidance.</li>
+                </ul>
+                <img src="https://tse1.mm.bing.net/th/id/OIP.F6UUFmTkm6yGEnKgDmXQtAHaEK?rs=1&pid=ImgDetMain&o=7&rm=3"
+                    alt="Field consultant planning irrigation layout" loading="lazy" />
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Benefits Pie Chart with visible text and brighter colors
+        new Chart(document.getElementById('benefitsChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Water Savings', 'Yield Boost', 'Cost Reduction', 'Climate Resilience'],
+                datasets: [{
+                    data: [70, 50, 40, 60],
+                    backgroundColor: ['#4CAF50', '#81C784', '#2196F3', '#A5D6A7']
+                }]
+            },
+            options: {
+                responsive: true,
+                animation: { duration: 1500 },
+                plugins: {
+                    legend: { display: true, position: 'bottom', labels: { color: '#fff', font: { size: 14, weight: 'bold' } } }
+                }
+            }
+        });
+
+        // Solutions Bar Chart with visible text and brighter colors
+        new Chart(document.getElementById('solutionsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Drip', 'Sprinkler', 'Rain Gun', 'Solar Pump'],
+                datasets: [{
+                    label: 'Efficiency Rating',
+                    data: [85, 75, 90, 80],
+                    backgroundColor: '#4CAF50'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true, ticks: { color: '#fff', font: { size: 12, weight: 'bold' } } },
+                    x: { ticks: { color: '#fff', font: { size: 12, weight: 'bold' } } }
+                },
+                animation: { duration: 1500 },
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { color: '#fff', font: { size: 14, weight: 'bold' } } }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

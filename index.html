@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANGUTHA DE!!!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://wallpaperaccess.com/full/5595412.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 10px 40px;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Improved Slider Styles */
+    .slider {
+      margin-top: 90px;
+      width: 100%;
+      height: 500px; /* Increased height for better visual impact */
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slides {
+      position: relative;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Fade transition */
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.8); /* Slightly darker for text contrast */
+    }
+
+    .slide-overlay {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%; /* Narrower for a more focused look */
+      text-align: center;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .slide-title {
+      font-size: 28px;
+      margin-bottom: 12px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .slide-desc {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .explore-btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      background: #2E7D32;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .explore-btn:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    /* Slider Navigation Buttons */
+    .slider-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      opacity: 0.7; /* Semi-visible by default */
+      transition: opacity 0.3s;
+    }
+
+    .slider:hover .slider-nav {
+      opacity: 1;
+    }
+
+    .prev-btn, .next-btn {
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border: none;
+      padding: 15px 20px;
+      cursor: pointer;
+      font-size: 24px;
+      transition: background 0.3s, transform 0.3s;
+      border-radius: 50%;
+    }
+
+    .prev-btn:hover, .next-btn:hover {
+      background: rgba(0, 0, 0, 0.9);
+      transform: scale(1.1);
+    }
+
+    /* Slider Dots */
+    .slider-dots {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .dot.active {
+      background: #2E7D32;
+      transform: scale(1.2);
+    }
+
+    .dot:hover {
+      background: #4CAF50;
+    }
+
+    section {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 40px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2E7D32;
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #ddd;
+    }
+
+    .button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      background: #2E7D32;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .button:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    /* Updated Footer Styles */
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 20px;
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      position: relative;
+      z-index: 3;
+      backdrop-filter: none;
+    }
+
+    .footer-contact {
+      margin-bottom: 20px;
+    }
+
+    .footer-contact h3 {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #2E7D32;
+      padding-bottom: 10px;
+    }
+
+    .footer-contact ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-contact li {
+      font-size: 16px;
+      color: #ddd;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    .footer-contact li:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-contact a {
+      color: #90EE90;
+      text-decoration: none;
+    }
+
+    .footer-contact a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-copyright {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .slider {
+        height: 300px; /* Adjusted for mobile */
+      }
+
+      .slide-title {
+        font-size: 20px;
+      }
+
+      .slide-desc {
+        font-size: 14px;
+      }
+
+      .slide-overlay {
+        width: 90%;
+        padding: 20px;
+        bottom: 20px;
+      }
+
+      .slider-dots {
+        bottom: 10px;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+      }
+
+      .footer-contact ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    
+  .logo-img {
+  height: 80px; /* or less — fits within 80px header */
+  width: auto;
+  margin-right: 10px;
+  transform: scale(1.8); /* visually enlarge */
+  transform-origin: left center;
+  object-fit: contain;
+  background: transparent;
+}
+
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="logo">
+  <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+  
+</div>
+
+
+    <div class="nav-links">
+      <a href="#why">Why</a>
+      <a href="#how">How</a>
+      <a href="plans.html">View Your Plans</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </header>
+
+
+
+  <!-- IMPROVED SLIDER -->
+  <div class="slider">
+    <div class="slides">
+      <!-- Slide 1 -->
+      <div class="slide">
+        <img src="https://w0.peakpx.com/wallpaper/286/844/HD-wallpaper-peanut-field-agriculture-drone-farm-irrigation-landscape-peanuts-rainbow.jpg" alt="Farming Landscape" loading="lazy" />
+        <div class="slide-overlay">
+          <div class="slide-title">Discover Modern Farming</div>
+          <div class="slide-desc">Beautiful fields ready for innovation.</div>
+          <button class="explore-btn" onclick="window.location.href='slide1.html'">Explore</button>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="slide">
+        <img src="https://img.freepik.com/premium-photo/drone-flying-over-vibrant-green-crop-field-with-irrigation-system-background_1275749-125.jpg" alt="Tech in Farming" loading="lazy" />
+        <div class="slide-overlay">
+          <div class="slide-title">Advanced Tech for Farming</div>
+          <div class="slide-desc">We use drones, AI irrigation, and real-time monitoring to boost yields and sustainability.</div>
+          <button class="explore-btn" onclick="window.location.href='slide2.html'">Explore</button>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="slide">
+        <img src="https://static.wixstatic.com/media/a52023c7fc574a329e19332e821fc596.jpg" alt="Crop Growth" loading="lazy" />
+        <div class="slide-overlay">
+          <div class="slide-title">Grow with Us</div>
+          <div class="slide-desc">Sustainable crop management.</div>
+          <button class="explore-btn" onclick="window.location.href='slide3.html'">Explore</button>
+        </div>
+      </div>
+      <!-- Slide 4 -->
+      <div class="slide">
+        <img src="https://i.ytimg.com/vi/zfzP9Q-N_jg/maxresdefault.jpg" alt="Irrigation System" loading="lazy" />
+        <div class="slide-overlay">
+          <div class="slide-title">Smart Irrigation</div>
+          <div class="slide-desc">Efficient water usage for better results.</div>
+          <button class="explore-btn" onclick="window.location.href='slide4.html'">Explore</button>
+        </div>
+      </div>
+      <!-- Slide 5 -->
+      <div class="slide">
+        <img src="https://4.bp.blogspot.com/-FATXXI1aIqY/WPoL7AWLmoI/AAAAAAAAAsA/vxfUvQm854Q1pwrRzQT9nskOQVPlbVFzACEw/s1600/earn-passive-income-1.jpg" alt="Passive Income" loading="lazy" />
+        <div class="slide-overlay">
+          <div class="slide-title">Earn Passively</div>
+          <div class="slide-desc">Rent your land and watch income grow.</div>
+          <button class="explore-btn" onclick="window.location.href='slide5.html'">Explore</button>
+        </div>
+      </div>
+    </div>
+    <!-- Slider Navigation Buttons -->
+    <div class="slider-nav">
+      <button class="prev-btn" aria-label="Previous Slide">&#10094;</button>
+      <button class="next-btn" aria-label="Next Slide">&#10095;</button>
+    </div>
+    <!-- Slider Dots -->
+    <div class="slider-dots">
+      <div class="dot" onclick="goToSlide(0)"></div>
+      <div class="dot" onclick="goToSlide(1)"></div>
+      <div class="dot" onclick="goToSlide(2)"></div>
+      <div class="dot" onclick="goToSlide(3)"></div>
+      <div class="dot" onclick="goToSlide(4)"></div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="section-title">Welcome</div>
+    <h2>RENT OUT YOUR LAND</h2>
+    <p>
+      Tum hume jameen do, sona hum nikal lenge. GreenTap connects farmers with professionals who grow crops, install irrigation, and manage everything — all while you earn.
+    </p>
+    <button class="button" onclick="window.location.href='knowwhat.html'">Know More</button>
+  </section>
+
+  <!-- WHY SECTION -->
+  <section id="why">
+    <div class="section-title">Why Choose Us</div>
+    <p>
+      🌿 Passive income for farmers<br>
+      💧 Smart irrigation and modern farming<br>
+      📲 Mobile-based land tracking<br>
+      🤝 Verified tenants and legal security
+    </p>
+  </section>
+
+  <!-- HOW SECTION -->
+  <section id="how">
+    <div class="section-title">How It Works</div>
+    <p>
+      1. Register with your mobile number<br>
+      2. Submit your land details and preferences<br>
+      3. We match you with the right tenant<br>
+      4. Farming starts, and you receive regular income
+    </p>
+  </section>
+
+  <!-- FOOTER with Integrated Contact Us -->
+  <footer>
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <ul>
+        <li>📧 Email: <a href="mihir220208@gmail.com">@helpanguthade</a></li>
+        <li>📞 Phone: <a href="tel:+911234567890">+91-9226033770</a></li>
+        <li>📸 Instagram: <a href="https://www.instagram.com/pungpungtung/">@pungpungpung</a></li>
+        <li>🐦 X (Twitter): <a href="https://twitter.com/anguthade">@anguthade</a></li>
+        <li>💬 WhatsApp: <a href="https://wa.me/911234567890">+91-9226033770</a></li>
+      </ul>
+    </div>
+    <div class="footer-copyright">
+      Made with ❤️ in India • GreenTap © 2025
+    </div>
+  </footer>
+
+  <script>
+    // Shrinking header on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Section fade-in animations
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
+
+    // Improved Slider Script with Auto-Slide
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const slider = document.querySelector('.slider');
+    let currentIndex = 0;
+    let autoSlideInterval;
+    const totalSlides = slides.length;
+
+    function updateSlider() {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentIndex);
+      });
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === currentIndex));
+    }
+
+    function goToSlide(index) {
+      currentIndex = (index + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        goToSlide(currentIndex + 1);
+      }, 5000); // Auto-advance every 5 seconds
+    }
+
+    function stopAutoSlide() {
+      clearInterval(autoSlideInterval);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      goToSlide(currentIndex + 1);
+      startAutoSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      stopAutoSlide();
+      goToSlide(currentIndex - 1);
+      startAutoSlide();
+    });
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        stopAutoSlide();
+        goToSlide(index);
+        startAutoSlide();
+      });
+    });
+
+    // Pause auto-slide on hover
+    slider.addEventListener('mouseenter', stopAutoSlide);
+    slider.addEventListener('mouseleave', startAutoSlide);
+
+    // Initialize
+    updateSlider();
+    startAutoSlide();
+  </script>
+
+</body>
+</html>
