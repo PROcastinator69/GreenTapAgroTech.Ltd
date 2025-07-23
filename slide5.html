@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>asdf</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dealers List - GreenTap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://wallpaperaccess.com/full/5595412.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 10px 40px;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .dealers-section {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2E7D32;
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    .dealers-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .dealer-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .dealer-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .dealer-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .dealer-name {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #90EE90;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .dealer-name:hover {
+      color: #4CAF50;
+    }
+
+    .dealer-business {
+      font-size: 16px;
+      margin-bottom: 5px;
+      color: #ddd;
+    }
+
+    .dealer-contact {
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: #bbb;
+    }
+
+    .dealer-rating {
+      font-size: 16px;
+      margin-bottom: 10px;
+      color: #FFD700; /* Gold for stars */
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #2E7D32;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin: 5px;
+    }
+
+    .button:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 20px;
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .footer-copyright {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      .dealers-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .logo-img {
+      height: 80px;
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.8);
+      transform-origin: left center;
+      object-fit: contain;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="logo">
+      <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a> <!-- Assuming your main page is index.html -->
+      <a href="#why">Why</a>
+      <a href="#how">How</a>
+      <a href="plans.html">View Your Plans</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </header>
+
+  <!-- DEALERS SECTION -->
+  <section class="dealers-section">
+    <div class="section-title">List of Dealers</div>
+    <div class="dealers-list">
+      <!-- Dealer 1 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Raj Patel" class="dealer-img">
+        <a href="profile.html?id=1" class="dealer-name">Raj Patel</a>
+        <div class="dealer-business">Farming Machineries</div>
+        <div class="dealer-contact">+91-9876543210</div>
+        <div class="dealer-rating">★★★★☆ (4.2/5)</div>
+        <button class="button" onclick="rateDealer(1)">Rate</button>
+        <button class="button" onclick="addToPlans(1, 'Raj Patel', 'Farming Machineries')">Add to Plans</button>
+      </div>
+      <!-- Dealer 2 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Priya Sharma" class="dealer-img">
+        <a href="profile.html?id=2" class="dealer-name">Priya Sharma</a>
+        <div class="dealer-business">Seed Exporter</div>
+        <div class="dealer-contact">+91-8765432109</div>
+        <div class="dealer-rating">★★★★★ (4.8/5)</div>
+        <button class="button" onclick="rateDealer(2)">Rate</button>
+        <button class="button" onclick="addToPlans(2, 'Priya Sharma', 'Seed Exporter')">Add to Plans</button>
+      </div>
+      <!-- Dealer 3 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Amit Kumar" class="dealer-img">
+        <a href="profile.html?id=3" class="dealer-name">Amit Kumar</a>
+        <div class="dealer-business">Irrigation Systems</div>
+        <div class="dealer-contact">+91-7654321098</div>
+        <div class="dealer-rating">★★★☆☆ (3.5/5)</div>
+        <button class="button" onclick="rateDealer(3)">Rate</button>
+        <button class="button" onclick="addToPlans(3, 'Amit Kumar', 'Irrigation Systems')">Add to Plans</button>
+      </div>
+      <!-- Dealer 4 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Neha Singh" class="dealer-img">
+        <a href="profile.html?id=4" class="dealer-name">Neha Singh</a>
+        <div class="dealer-business">Fertilizer Supplier</div>
+        <div class="dealer-contact">+91-6543210987</div>
+        <div class="dealer-rating">★★★★☆ (4.0/5)</div>
+        <button class="button" onclick="rateDealer(4)">Rate</button>
+        <button class="button" onclick="addToPlans(4, 'Neha Singh', 'Fertilizer Supplier')">Add to Plans</button>
+      </div>
+      <!-- Dealer 5 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Vikram Desai" class="dealer-img">
+        <a href="profile.html?id=5" class="dealer-name">Vikram Desai</a>
+        <div class="dealer-business">Crop Protection</div>
+        <div class="dealer-contact">+91-5432109876</div>
+        <div class="dealer-rating">★★★★★ (4.7/5)</div>
+        <button class="button" onclick="rateDealer(5)">Rate</button>
+        <button class="button" onclick="addToPlans(5, 'Vikram Desai', 'Crop Protection')">Add to Plans</button>
+      </div>
+      <!-- Dealer 6 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Anita Rao" class="dealer-img">
+        <a href="profile.html?id=6" class="dealer-name">Anita Rao</a>
+        <div class="dealer-business">Organic Seeds</div>
+        <div class="dealer-contact">+91-4321098765</div>
+        <div class="dealer-rating">★★★☆☆ (3.8/5)</div>
+        <button class="button" onclick="rateDealer(6)">Rate</button>
+        <button class="button" onclick="addToPlans(6, 'Anita Rao', 'Organic Seeds')">Add to Plans</button>
+      </div>
+      <!-- Dealer 7 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Suresh Mehta" class="dealer-img">
+        <a href="profile.html?id=7" class="dealer-name">Suresh Mehta</a>
+        <div class="dealer-business">Tractor Rentals</div>
+        <div class="dealer-contact">+91-3210987654</div>
+        <div class="dealer-rating">★★★★☆ (4.3/5)</div>
+        <button class="button" onclick="rateDealer(7)">Rate</button>
+        <button class="button" onclick="addToPlans(7, 'Suresh Mehta', 'Tractor Rentals')">Add to Plans</button>
+      </div>
+      <!-- Dealer 8 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Kavita Joshi" class="dealer-img">
+        <a href="profile.html?id=8" class="dealer-name">Kavita Joshi</a>
+        <div class="dealer-business">Pest Control Services</div>
+        <div class="dealer-contact">+91-2109876543</div>
+        <div class="dealer-rating">★★★★★ (4.9/5)</div>
+        <button class="button" onclick="rateDealer(8)">Rate</button>
+        <button class="button" onclick="addToPlans(8, 'Kavita Joshi', 'Pest Control Services')">Add to Plans</button>
+      </div>
+      <!-- Dealer 9 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Rahul Verma" class="dealer-img">
+        <a href="profile.html?id=9" class="dealer-name">Rahul Verma</a>
+        <div class="dealer-business">Soil Testing Labs</div>
+        <div class="dealer-contact">+91-1098765432</div>
+        <div class="dealer-rating">★★★☆☆ (3.6/5)</div>
+        <button class="button" onclick="rateDealer(9)">Rate</button>
+        <button class="button" onclick="addToPlans(9, 'Rahul Verma', 'Soil Testing Labs')">Add to Plans</button>
+      </div>
+      <!-- Dealer 10 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/10.jpg" alt="Meera Gupta" class="dealer-img">
+        <a href="profile.html?id=10" class="dealer-name">Meera Gupta</a>
+        <div class="dealer-business">Drip Irrigation</div>
+        <div class="dealer-contact">+91-0987654321</div>
+        <div class="dealer-rating">★★★★☆ (4.1/5)</div>
+        <button class="button" onclick="rateDealer(10)">Rate</button>
+        <button class="button" onclick="addToPlans(10, 'Meera Gupta', 'Drip Irrigation')">Add to Plans</button>
+      </div>
+      <!-- Dealer 11 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Arjun Nair" class="dealer-img">
+        <a href="profile.html?id=11" class="dealer-name">Arjun Nair</a>
+        <div class="dealer-business">Farm Tools</div>
+        <div class="dealer-contact">+91-9876543211</div>
+        <div class="dealer-rating">★★★★★ (4.6/5)</div>
+        <button class="button" onclick="rateDealer(11)">Rate</button>
+        <button class="button" onclick="addToPlans(11, 'Arjun Nair', 'Farm Tools')">Add to Plans</button>
+      </div>
+      <!-- Dealer 12 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Lata Iyer" class="dealer-img">
+        <a href="profile.html?id=12" class="dealer-name">Lata Iyer</a>
+        <div class="dealer-business">Seedling Nursery</div>
+        <div class="dealer-contact">+91-8765432110</div>
+        <div class="dealer-rating">★★★☆☆ (3.9/5)</div>
+        <button class="button" onclick="rateDealer(12)">Rate</button>
+        <button class="button" onclick="addToPlans(12, 'Lata Iyer', 'Seedling Nursery')">Add to Plans</button>
+      </div>
+      <!-- Dealer 13 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/13.jpg" alt="Kiran Reddy" class="dealer-img">
+        <a href="profile.html?id=13" class="dealer-name">Kiran Reddy</a>
+        <div class="dealer-business">Harvesting Equipment</div>
+        <div class="dealer-contact">+91-7654321099</div>
+        <div class="dealer-rating">★★★★☆ (4.4/5)</div>
+        <button class="button" onclick="rateDealer(13)">Rate</button>
+        <button class="button" onclick="addToPlans(13, 'Kiran Reddy', 'Harvesting Equipment')">Add to Plans</button>
+      </div>
+      <!-- Dealer 14 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/women/14.jpg" alt="Sunita Pillai" class="dealer-img">
+        <a href="profile.html?id=14" class="dealer-name">Sunita Pillai</a>
+        <div class="dealer-business">Organic Fertilizers</div>
+        <div class="dealer-contact">+91-6543210988</div>
+        <div class="dealer-rating">★★★★★ (4.5/5)</div>
+        <button class="button" onclick="rateDealer(14)">Rate</button>
+        <button class="button" onclick="addToPlans(14, 'Sunita Pillai', 'Organic Fertilizers')">Add to Plans</button>
+      </div>
+      <!-- Dealer 15 -->
+      <div class="dealer-card">
+        <img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Ravi Menon" class="dealer-img">
+        <a href="profile.html?id=15" class="dealer-name">Ravi Menon</a>
+        <div class="dealer-business">Drone Spraying Services</div>
+        <div class="dealer-contact">+91-5432109877</div>
+        <div class="dealer-rating">★★★☆☆ (3.7/5)</div>
+        <button class="button" onclick="rateDealer(15)">Rate</button>
+        <button class="button" onclick="addToPlans(15, 'Ravi Menon', 'Drone Spraying Services')">Add to Plans</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copyright">
+      Made with ❤️ in India • GreenTap © 2025
+    </div>
+  </footer>
+
+  <script>
+    // Shrinking header on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Function to add dealer to plans (using localStorage)
+    function addToPlans(id, name, business) {
+      let plans = JSON.parse(localStorage.getItem('userPlans')) || [];
+      if (!plans.some(plan => plan.id === id)) {
+        plans.push({ id, name, business });
+        localStorage.setItem('userPlans', JSON.stringify(plans));
+        alert(`${name} added to your plans!`);
+      } else {
+        alert(`${name} is already in your plans.`);
+      }
+    }
+
+    // Simple rate function (placeholder - can be expanded to a form/modal)
+    function rateDealer(id) {
+      let rating = prompt('Rate this dealer (1-5):');
+      if (rating && !isNaN(rating) && rating >= 1 && rating <= 5) {
+        alert(`You rated dealer ${id} with ${rating} stars!`);
+        // In a real app, send to server here
+      } else {
+        alert('Invalid rating. Please enter a number between 1 and 5.');
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+</body>
+</html>
