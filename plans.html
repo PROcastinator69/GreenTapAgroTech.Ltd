@@ -6,6 +6,255 @@
     <title>Document</title>
 </head>
 <body>
-    <p>hey babe</p>
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Your Plans - GreenTap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://wallpaperaccess.com/full/5595412.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 10px 40px;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .plans-section {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      padding: 80px 40px;
+      max-width: 1200px;
+      margin: 100px auto 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2E7D32;
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    .plans-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .plan-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .plan-name {
+      font-size: 20px;
+      margin-bottom: 5px;
+      color: #90EE90;
+    }
+
+    .plan-business {
+      font-size: 16px;
+      color: #ddd;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #2E7D32;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 10px;
+    }
+
+    .button:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 20px;
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .footer-copyright {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      .plans-list {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .logo-img {
+      height: 80px;
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.8);
+      transform-origin: left center;
+      object-fit: contain;
+      background: transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="logo">
+      <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+    </div>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a> <!-- Assuming your main page is index.html -->
+      <a href="#why">Why</a>
+      <a href="#how">How</a>
+      <a href="plans.html">View Your Plans</a>
+      <a href="login.html">Login</a>
+      <a href="register.html">Register</a>
+    </div>
+  </header>
+
+  <!-- PLANS SECTION -->
+  <section class="plans-section">
+    <div class="section-title">Your Added Plans</div>
+    <div class="plans-list" id="plansList"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-copyright">
+      Made with ❤️ in India • GreenTap © 2025
+    </div>
+  </footer>
+
+  <script>
+    // Shrinking header on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Load and display plans from localStorage
+    function loadPlans() {
+      const plansList = document.getElementById('plansList');
+      plansList.innerHTML = '';
+      let plans = JSON.parse(localStorage.getItem('userPlans')) || [];
+
+      if (plans.length === 0) {
+        plansList.innerHTML = '<p style="text-align: center; color: #ddd;">No plans added yet. Add from the dealers list!</p>';
+        return;
+      }
+
+      plans.forEach(plan => {
+        const card = document.createElement('div');
+        card.classList.add('plan-card');
+        card.innerHTML = `
+          <div class="plan-name">${plan.name}</div>
+          <div class="plan-business">${plan.business}</div>
+          <button class="button" onclick="removePlan(${plan.id})">Remove</button>
+        `;
+        plansList.appendChild(card);
+      });
+    }
+
+    // Function to remove a plan
+    function removePlan(id) {
+      let plans = JSON.parse(localStorage.getItem('userPlans')) || [];
+      plans = plans.filter(plan => plan.id !== id);
+      localStorage.setItem('userPlans', JSON.stringify(plans));
+      loadPlans();
+      alert('Plan removed!');
+    }
+
+    // Initialize
+    loadPlans();
+  </script>
+
+</body>
+</html>
+
 </body>
 </html>
