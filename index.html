@@ -379,19 +379,15 @@
       }
     }
     
-  .logo-img {
-  height: 80px; /* or less — fits within 80px header */
-  width: auto;
-  margin-right: 10px;
-  transform: scale(1.8); /* visually enlarge */
-  transform-origin: left center;
-  object-fit: contain;
-  background: transparent;
-}
-
-
-
-
+    .logo-img {
+      height: 80px; /* or less — fits within 80px header */
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.8); /* visually enlarge */
+      transform-origin: left center;
+      object-fit: contain;
+      background: transparent;
+    }
   </style>
 </head>
 <body>
@@ -399,10 +395,8 @@
   <!-- HEADER -->
   <header id="main-header">
     <div class="logo">
-  <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
-  
-</div>
-
+      <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+    </div>
 
     <div class="nav-links">
       <a href="#why">Why</a>
@@ -413,8 +407,6 @@
     </div>
   </header>
 
-
-
   <!-- IMPROVED SLIDER -->
   <div class="slider">
     <div class="slides">
@@ -424,7 +416,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Discover Modern Farming</div>
           <div class="slide-desc">Beautiful fields ready for innovation.</div>
-          <button class="explore-btn" onclick="window.location.href='slide1.html'">Explore</button>
+          <button class="explore-btn" onclick="navigateToPage('slide1.html')">Explore</button>
         </div>
       </div>
       <!-- Slide 2 -->
@@ -433,7 +425,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Advanced Tech for Farming</div>
           <div class="slide-desc">We use drones, AI irrigation, and real-time monitoring to boost yields and sustainability.</div>
-          <button class="explore-btn" onclick="window.location.href='slide2.html'">Explore</button>
+          <button class="explore-btn" onclick="navigateToPage('slide2.html')">Explore</button>
         </div>
       </div>
       <!-- Slide 3 -->
@@ -442,7 +434,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Grow with Us</div>
           <div class="slide-desc">Sustainable crop management.</div>
-          <button class="explore-btn" onclick="window.location.href='slide3.html'">Explore</button>
+          <button class="explore-btn" onclick="navigateToPage('slide3.html')">Explore</button>
         </div>
       </div>
       <!-- Slide 4 -->
@@ -451,7 +443,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Smart Irrigation</div>
           <div class="slide-desc">Efficient water usage for better results.</div>
-          <button class="explore-btn" onclick="window.location.href='slide4.html'">Explore</button>
+          <button class="explore-btn" onclick="navigateToPage('slide4.html')">Explore</button>
         </div>
       </div>
       <!-- Slide 5 -->
@@ -460,7 +452,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Earn Passively</div>
           <div class="slide-desc">Rent your land and watch income grow.</div>
-          <button class="explore-btn" onclick="window.location.href='slide5.html'">Explore</button>
+          <button class="explore-btn" onclick="navigateToPage('slide5.html')">Explore</button>
         </div>
       </div>
     </div>
@@ -605,6 +597,11 @@
     // Initialize
     updateSlider();
     startAutoSlide();
+
+    // Function to handle navigation (ensures it works even if JavaScript is partially blocked)
+    function navigateToPage(url) {
+      window.location.href = url;
+    }
   </script>
 
 </body>
