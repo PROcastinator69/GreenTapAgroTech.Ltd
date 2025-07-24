@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dealer Profile - GreenTap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Reuse styles from dealers.html for consistency (copy relevant sections here if needed) */
+    .profile-section {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      padding: 80px 40px;
+      max-width: 800px;
+      margin: 100px auto 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .profile-img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    .profile-name {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #90EE90;
+    }
+
+    .profile-business {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #ddd;
+    }
+
+    .profile-contact {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #bbb;
+    }
+
+    .profile-rating {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #FFD700;
+    }
+
+    .profile-provided {
+      margin-bottom: 30px;
+    }
+
+    .profile-provided ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .profile-provided li {
+      font-size: 16px;
+      margin: 5px 0;
+      color: #ddd;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #2E7D32;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin: 10px;
+    }
+
+    .button:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (reuse from dealers.html if needed) -->
+
+  <!-- PROFILE SECTION -->
+  <section class="profile-section">
+    <img id="profile-img" class="profile-img" alt="Dealer Image">
+    <div id="profile-name" class="profile-name"></div>
+    <div id="profile-business" class="profile-business"></div>
+    <div id="profile-contact" class="profile-contact"></div>
+    <div id="profile-rating" class="profile-rating"></div>
+    <div class="profile-provided">
+      <h3>What They Provide</h3>
+      <ul id="provided-list"></ul>
+    </div>
+    <a id="contact-btn" class="button">Contact Dealer</a>
+    <button class="button" id="buy-btn">Buy Goods</button> <!-- Does nothing for now -->
+  </section>
+
+  <!-- FOOTER (reuse from dealers.html if needed) -->
+
+  <script>
+    // Merged dealer data (includes 1-20 with placeholders for 3-15)
+    const dealers = {
+      1: {
+        name: 'Raj Patel',
+        business: 'Farming Machineries',
+        contact: '+91-9876543210',
+        email: 'raj@example.com',
+        rating: '★★★★☆ (4.2/5)',
+        img: 'https://randomuser.me/api/portraits/men/1.jpg',
+        provided: ['Tractors', 'Harvesters', 'Plows']
+      },
+      2: {
+        name: 'Priya Sharma',
+        business: 'Seed Exporter',
+        contact: '+91-8765432109',
+        email: 'priya@example.com',
+        rating: '★★★★★ (4.8/5)',
+        img: 'https://randomuser.me/api/portraits/women/2.jpg',
+        provided: ['Rice Seeds', 'Wheat Seeds', 'Vegetable Seeds']
+      },
+      3: {
+        name: 'Amit Kumar',
+        business: 'Irrigation Systems',
+        contact: '+91-7654321098',
+        email: 'amit@example.com',
+        rating: '★★★☆☆ (3.5/5)',
+        img: 'https://randomuser.me/api/portraits/men/3.jpg',
+        provided: ['Drip Systems', 'Sprinklers', 'Pumps']
+      },
+      4: {
+        name: 'Neha Singh',
+        business: 'Fertilizer Supplier',
+        contact: '+91-6543210987',
+        email: 'neha@example.com',
+        rating: '★★★★☆ (4.0/5)',
+        img: 'https://randomuser.me/api/portraits/women/4.jpg',
+        provided: ['NPK Fertilizers', 'Organic Mixes', 'Micronutrients']
+      },
+      5: {
+        name: 'Vikram Desai',
+        business: 'Crop Protection',
+        contact: '+91-5432109876',
+        email: 'vikram@example.com',
+        rating: '★★★★★ (4.7/5)',
+        img: 'https://randomuser.me/api/portraits/men/5.jpg',
+        provided: ['Pesticides', 'Herbicides', 'Fungicides']
+      },
+      6: {
+        name: 'Anita Rao',
+        business: 'Organic Seeds',
+        contact: '+91-4321098765',
+        email: 'anita@example.com',
+        rating: '★★★☆☆ (3.8/5)',
+        img: 'https://randomuser.me/api/portraits/women/6.jpg',
+        provided: ['Heirloom Seeds', 'GMO-Free Varieties', 'Herb Seeds']
+      },
+      7: {
+        name: 'Suresh Mehta',
+        business: 'Tractor Rentals',
+        contact: '+91-3210987654',
+        email: 'suresh@example.com',
+        rating: '★★★★☆ (4.3/5)',
+        img: 'https://randomuser.me/api/portraits/men/7.jpg',
+        provided: ['Compact Tractors', 'Heavy-Duty Models', 'Attachments']
+      },
+      8: {
+        name: 'Kavita Joshi',
+        business: 'Pest Control Services',
+        contact: '+91-2109876543',
+        email: 'kavita@example.com',
+        rating: '★★★★★ (4.9/5)',
+        img: 'https://randomuser.me/api/portraits/women/8.jpg',
+        provided: ['Organic Pest Control', 'Chemical Treatments', 'Monitoring']
+      },
+      9: {
+        name: 'Rahul Verma',
+        business: 'Soil Testing Labs',
+        contact: '+91-1098765432',
+        email: 'rahul@example.com',
+        rating: '★★★☆☆ (3.6/5)',
+        img: 'https://randomuser.me/api/portraits/men/9.jpg',
+        provided: ['pH Testing', 'Nutrient Analysis', 'Contaminant Checks']
+      },
+      10: {
+        name: 'Meera Gupta',
+        business: 'Drip Irrigation',
+        contact: '+91-0987654321',
+        email: 'meera@example.com',
+        rating: '★★★★☆ (4.1/5)',
+        img: 'https://randomuser.me/api/portraits/women/10.jpg',
+        provided: ['Drip Kits', 'Emitters', 'Filters']
+      },
+      11: {
+        name: 'Arjun Nair',
+        business: 'Farm Tools',
+        contact: '+91-9876543211',
+        email: 'arjun@example.com',
+        rating: '★★★★★ (4.6/5)',
+        img: 'https://randomuser.me/api/portraits/men/11.jpg',
+        provided: ['Hand Tools', 'Power Tools', 'Safety Gear']
+      },
+      12: {
+        name: 'Lata Iyer',
+        business: 'Seedling Nursery',
+        contact: '+91-8765432110',
+        email: 'lata@example.com',
+        rating: '★★★☆☆ (3.9/5)',
+        img: 'https://randomuser.me/api/portraits/women/12.jpg',
+        provided: ['Vegetable Seedlings', 'Fruit Tree Saplings', 'Flower Starts']
+      },
+      13: {
+        name: 'Kiran Reddy',
+        business: 'Harvesting Equipment',
+        contact: '+91-7654321099',
+        email: 'kiran@example.com',
+        rating: '★★★★☆ (4.4/5)',
+        img: 'https://randomuser.me/api/portraits/men/13.jpg',
+        provided: ['Combine Harvesters', 'Sickles', 'Threshers']
+      },
+      14: {
+        name: 'Sunita Pillai',
+        business: 'Organic Fertilizers',
+        contact: '+91-6543210988',
+        email: 'sunita@example.com',
+        rating: '★★★★★ (4.5/5)',
+        img: 'https://randomuser.me/api/portraits/women/14.jpg',
+        provided: ['Compost', 'Bone Meal', 'Seaweed Extracts']
+      },
+      15: {
+        name: 'Ravi Menon',
+        business: 'Drone Spraying Services',
+        contact: '+91-5432109877',
+        email: 'ravi@example.com',
+        rating: '★★★☆☆ (3.7/5)',
+        img: 'https://randomuser.me/api/portraits/men/15.jpg',
+        provided: ['Aerial Spraying', 'Crop Monitoring', 'Drone Rentals']
+      },
+      16: {
+        name: 'Sanjay Bose',
+        business: 'Livestock Feed Supplier',
+        contact: '+91-9876543216',
+        email: 'sanjay@example.com',
+        rating: '★★★★☆ (4.3/5)',
+        img: 'https://randomuser.me/api/portraits/men/16.jpg',
+        provided: ['Cattle Feed', 'Poultry Feed', 'Organic Supplements']
+      },
+      17: {
+        name: 'Pooja Chatterjee',
+        business: 'Greenhouse Materials',
+        contact: '+91-8765432117',
+        email: 'pooja@example.com',
+        rating: '★★★★★ (4.7/5)',
+        img: 'https://randomuser.me/api/portraits/women/17.jpg',
+        provided: ['Polythene Sheets', 'Shade Nets', 'Greenhouse Frames']
+      },
+      18: {
+        name: 'Vivek Das',
+        business: 'Water Pumps',
+        contact: '+91-7654321018',
+        email: 'vivek@example.com',
+        rating: '★★★☆☆ (3.9/5)',
+        img: 'https://randomuser.me/api/portraits/men/18.jpg',
+        provided: ['Submersible Pumps', 'Solar Pumps', 'Irrigation Pumps']
+      },
+      19: {
+        name: 'Rina Sen',
+        business: 'Compost Suppliers',
+        contact: '+91-6543210919',
+        email: 'rina@example.com',
+        rating: '★★★★☆ (4.0/5)',
+        img: 'https://randomuser.me/api/portraits/women/19.jpg',
+        provided: ['Vermicompost', 'Organic Manure', 'Bio-Compost']
+      },
+      20: {
+        name: 'Amit Roy',
+        business: 'Farm Consulting Services',
+        contact: '+91-5432109820',
+        email: 'amit@example.com',
+        rating: '★★★★★ (4.6/5)',
+        img: 'https://randomuser.me/api/portraits/men/20.jpg',
+        provided: ['Crop Planning', 'Soil Analysis', 'Sustainability Advice']
+      }
+    };
+
+    // Load dealer data based on URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const dealer = dealers[id];
+
+    if (dealer) {
+      document.getElementById('profile-img').src = dealer.img;
+      document.getElementById('profile-name').textContent = dealer.name;
+      document.getElementById('profile-business').textContent = dealer.business;
+      document.getElementById('profile-contact').textContent = dealer.contact;
+      document.getElementById('profile-rating').textContent = dealer.rating;
+
+      // Populate provided list
+      const list = document.getElementById('provided-list');
+      dealer.provided.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+      });
+
+      // Contact button
+      const contactBtn = document.getElementById('contact-btn');
+      contactBtn.href = `mailto:${dealer.email}?subject=Inquiry from GreenTap`;
+
+      // Buy button (does nothing)
+      document.getElementById('buy-btn').addEventListener('click', () => {
+        // Placeholder: alert('Buy functionality not implemented yet.');
+      });
+    } else {
+      document.querySelector('.profile-section').innerHTML = '<p>Dealer not found.</p>';
+    }
+  </script>
+</body>
+</html>
