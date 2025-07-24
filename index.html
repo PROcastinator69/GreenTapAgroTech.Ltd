@@ -59,22 +59,86 @@
       transform: scale(1.1);
     }
 
-    .nav-links {
-      display: flex;
-      gap: 15px;
+    /* Hamburger Icon for Menu Trigger */
+    .hamburger {
+      display: block;
+      cursor: pointer;
+      z-index: 1001;
     }
 
-    .nav-links a {
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Sliding Menu Bar from Right */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 60px 20px 20px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-menu.active {
+      transform: translateX(0);
+    }
+
+    .nav-menu a {
       color: #fff;
       text-decoration: none;
-      padding: 8px 16px;
+      padding: 10px 20px;
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.1);
       transition: 0.3s ease;
+      text-align: center;
     }
 
-    .nav-links a:hover {
+    .nav-menu a:hover {
       background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Overlay for Dimming Background When Menu is Open */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     /* Improved Slider Styles */
@@ -338,13 +402,6 @@
         align-items: flex-start;
       }
 
-      .nav-links {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
-        margin-top: 10px;
-      }
-
       .slider {
         height: 300px; /* Adjusted for mobile */
       }
@@ -392,20 +449,31 @@
 </head>
 <body>
 
+  <!-- Overlay for Menu -->
+  <div class="overlay" id="overlay"></div>
+
   <!-- HEADER -->
   <header id="main-header">
     <div class="logo">
       <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
     </div>
 
-    <div class="nav-links">
-      <a href="#why">Why</a>
-      <a href="#how">How</a>
-      <a href="plans.html">View Your Plans</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
+    <!-- Hamburger Trigger -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </header>
+
+  <!-- Sliding Menu Bar -->
+  <nav class="nav-menu" id="nav-menu">
+    <a href="#why">Why</a>
+    <a href="#how">How</a>
+    <a href="plans.html">View Your Plans</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </nav>
 
   <!-- IMPROVED SLIDER -->
   <div class="slider">
@@ -521,6 +589,23 @@
   </footer>
 
   <script>
+    // Menu Toggle Functionality
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
     // Shrinking header on scroll
     window.addEventListener('scroll', () => {
       const header = document.getElementById('main-header');
