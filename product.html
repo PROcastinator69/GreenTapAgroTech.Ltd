@@ -1,0 +1,142 @@
+<!-- Sample product.html - Create this as a separate file and add the 'Add to Cart' functionality there -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Details - GreenTap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Reuse similar styles from marketplace.html for consistency */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://wallpapers.com/images/hd/plain-white-background-3qzwpiavktxg11pr.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      padding: 100px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+    }
+
+    img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 24px;
+      color: #2E7D32;
+      margin-bottom: 20px;
+    }
+
+    .details {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      background: #2E7D32;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 20px;
+    }
+
+    .add-to-cart:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    /* Star Rating */
+    .rating {
+      color: #FFD700;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img id="product-image" src="" alt="Product" />
+    <h1 id="product-title"></h1>
+    <div class="price" id="product-price"></div>
+    <div class="rating" id="product-rating">★★★★☆ (4.5/5)</div> <!-- Example rating -->
+    <p class="details"><strong>Manufacturer:</strong> <span id="product-manufacturer"></span></p>
+    <p class="details"><strong>Description:</strong> <span id="product-desc"></span></p>
+    <button class="add-to-cart" onclick="addToCart()">Add to Cart</button>
+  </main>
+
+  <script>
+    // Sample Product Data (In a real setup, this could be fetched or passed via URL params)
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+    const products = {
+      1: { title: 'Fresh Tomatoes', price: '₹50/kg', desc: 'Organic tomatoes grown with care.', image: 'https://via.placeholder.com/250x150?text=Tomatoes', manufacturer: 'GreenFarm Inc.', rating: '4.5' },
+      2: { title: 'Carrots', price: '₹40/kg', desc: 'Fresh carrots from local farms.', image: 'https://via.placeholder.com/250x150?text=Carrots', manufacturer: 'VeggiePro', rating: '4.7' },
+      3: { title: 'Wheat Seeds', price: '₹200/pack', desc: 'High yield wheat seeds.', image: 'https://via.placeholder.com/250x150?text=Wheat+Seeds', manufacturer: 'SeedMasters', rating: '4.8' },
+      4: { title: 'Organic Fertilizer', price: '₹300/bag', desc: 'Eco-friendly organic fertilizer.', image: 'https://via.placeholder.com/250x150?text=Organic+Fertilizer', manufacturer: 'EcoGrow', rating: '4.6' },
+      5: { title: 'Potato Seeds', price: '₹150/pack', desc: 'Disease resistant potato seeds.', image: 'https://via.placeholder.com/250x150?text=Potato+Seeds', manufacturer: 'FarmSeeds', rating: '4.4' },
+      6: { title: 'NPK Fertilizer', price: '₹250/bag', desc: 'Balanced NPK fertilizer for crops.', image: 'https://via.placeholder.com/250x150?text=NPK+Fertilizer', manufacturer: 'NutriBoost', rating: '4.9' },
+      7: { title: 'Fresh Spinach', price: '₹30/bundle', desc: 'Nutrient-rich fresh spinach.', image: 'https://via.placeholder.com/250x150?text=Spinach', manufacturer: 'GreenLeaf', rating: '4.3' },
+      8: { title: 'Corn Seeds', price: '₹180/pack', desc: 'Sweet corn variety seeds.', image: 'https://via.placeholder.com/250x150?text=Corn+Seeds', manufacturer: 'CornKing', rating: '4.7' },
+      9: { title: 'Compost Fertilizer', price: '₹200/bag', desc: 'Natural compost for soil enhancement.', image: 'https://via.placeholder.com/250x150?text=Compost', manufacturer: 'EarthCare', rating: '4.5' },
+      10: { title: 'Fresh Onions', price: '₹35/kg', desc: 'High quality fresh onions.', image: 'https://via.placeholder.com/250x150?text=Onions', manufacturer: 'VeggieFresh', rating: '4.6' }
+    };
+
+    if (id && products[id]) {
+      const product = products[id];
+      document.getElementById('product-image').src = product.image;
+      document.getElementById('product-title').textContent = product.title;
+      document.getElementById('product-price').textContent = product.price;
+      document.getElementById('product-rating').textContent = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating)) + ` (${product.rating}/5)`;
+      document.getElementById('product-manufacturer').textContent = product.manufacturer;
+      document.getElementById('product-desc').textContent = product.desc;
+    }
+
+    function addToCart() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push(products[id].title);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert('Added to cart!');
+      // Optionally redirect back to marketplace
+      // window.location.href = 'marketplace.html';
+    }
+  </script>
+</body>
+</html>
