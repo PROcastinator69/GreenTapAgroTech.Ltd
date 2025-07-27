@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Export Hub - GreenTap Agrotech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      font-family: 'Roboto', sans-serif;
+      color: #fff;
+      scroll-behavior: smooth;
+      background: url('https://wallpapercave.com/wp/wp2555218.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 40px;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+      transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+      padding: 10px 40px;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      transition: transform 0.3s;
+    }
+
+    .logo:hover {
+      transform: scale(1.1);
+    }
+
+    .logo-img {
+      height: 80px;
+      width: auto;
+      margin-right: 10px;
+      transform: scale(1.8);
+      transform-origin: left center;
+      object-fit: contain;
+      background: transparent;
+    }
+
+    /* Hamburger Icon for Menu Trigger */
+    .hamburger {
+      display: block;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Sliding Menu Bar from Right */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 250px;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 60px 20px 20px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .nav-menu.active {
+      transform: translateX(0);
+    }
+
+    .nav-menu a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: 0.3s ease;
+      text-align: center;
+    }
+
+    .nav-menu a:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Overlay for Dimming Background When Menu is Open */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Main Content Styles */
+    main {
+      position: relative;
+      z-index: 2;
+      padding: 120px 40px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section {
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2E7D32;
+      padding-left: 12px;
+      text-transform: uppercase;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      background: #2E7D32;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 20px;
+    }
+
+    .button:hover {
+      background: #1B5E20;
+      transform: scale(1.05);
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      max-width: 800px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 40px;
+      border-radius: 15px;
+      z-index: 1002;
+      display: none;
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal-content {
+      margin-bottom: 20px;
+    }
+
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    input, select {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    /* Educational Section */
+    .educational-section {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 20px;
+    }
+
+    .educational-section h3 {
+      font-size: 24px;
+      margin: 20px 0 10px;
+    }
+
+    .educational-section ul {
+      list-style: disc;
+      padding-left: 20px;
+      color: #ddd;
+    }
+
+    /* Chart Placeholder */
+    .chart-placeholder {
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #aaa;
+      margin-top: 20px;
+    }
+
+    /* Updated Footer Styles */
+    footer {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 40px 20px;
+      text-align: center;
+      color: #bbb;
+      font-size: 14px;
+      position: relative;
+      z-index: 3;
+      backdrop-filter: none;
+    }
+
+    .footer-contact {
+      margin-bottom: 20px;
+    }
+
+    .footer-contact h3 {
+      font-size: 24px;
+      color: #fff;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #2E7D32;
+      padding-bottom: 10px;
+    }
+
+    .footer-contact ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-contact li {
+      font-size: 16px;
+      color: #ddd;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: background 0.3s;
+    }
+
+    .footer-contact li:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .footer-contact a {
+      color: #90EE90;
+      text-decoration: none;
+    }
+
+    .footer-contact a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-copyright {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #bbb;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        padding: 100px 20px 60px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .modal {
+        width: 95%;
+        padding: 20px;
+      }
+
+      .footer-contact ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Overlay for Menu -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="logo">
+      <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+    </div>
+
+    <!-- Hamburger Trigger -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- Sliding Menu Bar -->
+  <nav class="nav-menu" id="nav-menu">
+    <a href="#why">Why</a>
+    <a href="#how">How</a>
+    <a href="plans.html">View Your Plans</a>
+    <a href="marketplace.html">Market Place</a>
+    <a href="export-hub.html">Export Hub</a>
+    <a href="login.html">Login</a>
+    <a href="register.html">Register</a>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <section class="section" id="export-start">
+      <div class="section-title">Export Hub</div>
+      <p>Welcome to GreenTap's Export Hub. Start your export journey with us to expand your agricultural products globally.</p>
+      <button class="button" id="export-btn">Export</button>
+    </section>
+
+    <!-- KYC Form Section (Hidden Initially) -->
+    <section class="section" id="kyc-section" style="display: none;">
+      <div class="section-title">KYC Verification</div>
+      <p>Please provide your details for verification.</p>
+      <form id="kyc-form">
+        <input type="text" placeholder="Name" required>
+        <select required>
+          <option value="">Select Business Type</option>
+          <option value="individual">Individual</option>
+          <option value="company">Company</option>
+          <option value="farm-coop">Farm Cooperative</option>
+        </select>
+        <input type="text" placeholder="GST/PAN Number" required>
+        <input type="tel" placeholder="Contact Number" required>
+        <button type="submit" class="button">Verify</button>
+      </form>
+    </section>
+
+    <!-- Educational Section (Hidden Initially) -->
+    <section class="section" id="educational-section" style="display: none;">
+      <div class="section-title">How Exports Work</div>
+      <div class="educational-section">
+        <h3>Steps to Export</h3>
+        <ul>
+          <li>Register and complete KYC.</li>
+          <li>Prepare your products and documentation.</li>
+          <li>Find buyers through our network.</li>
+          <li>Ship and track your exports.</li>
+          <li>Receive payments securely.</li>
+        </ul>
+
+        <h3>Required Documents</h3>
+        <ul>
+          <li>Export License</li>
+          <li>Invoice and Packing List</li>
+          <li>Certificate of Origin</li>
+          <li>Quality Certificates (e.g., Phytosanitary)</li>
+          <li>Bill of Lading/Airway Bill</li>
+        </ul>
+
+        <h3>Common FAQs</h3>
+        <p><strong>Q: What products can I export?</strong> A: Agricultural goods like grains, fruits, vegetables, and processed foods.</p>
+        <p><strong>Q: How long does verification take?</strong> A: Typically 24-48 hours.</p>
+        <p><strong>Q: Are there fees?</strong> A: Minimal platform fees apply.</p>
+        <!-- Add more FAQs as needed -->
+      </div>
+      <button class="button" id="start-planning-btn">Start Planning Export</button>
+    </section>
+
+    <!-- Optional Planning Section (Hidden Initially) -->
+    <section class="section" id="planning-section" style="display: none;">
+      <div class="section-title">Plan Your Export</div>
+      <p>Enter your location and preferred month to see available goods and seasonal trends.</p>
+      <form id="planning-form">
+        <input type="text" placeholder="Location (e.g., Pune, India)" required>
+        <select required>
+          <option value="">Select Month</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <!-- Add all months -->
+          <option value="December">December</option>
+        </select>
+        <button type="submit" class="button">Show Trends</button>
+      </form>
+      <div class="chart-placeholder" id="chart">Mock Chart: Available Goods (e.g., Rice, Mangoes) and Trends for Selected Month</div>
+    </section>
+  </main>
+
+  <!-- Why Export Modal -->
+  <div class="modal" id="why-modal">
+    <div class="modal-content">
+      <div class="section-title">Why Export with Us</div>
+      <p>In today's global market, exporting agricultural products can significantly boost your income and expand your reach. At GreenTap, we make it seamless with our advanced tech and network.</p>
+      <p><strong>Global Reach:</strong> Connect with buyers in over 50 countries.</p>
+      <p><strong>Tech Support:</strong> Use AI for market trends and logistics.</p>
+      <p><strong>Sustainable Practices:</strong> We ensure eco-friendly exports.</p>
+      <p><strong>Secure Payments:</strong> Hassle-free transactions with insurance.</p>
+      <p>Join thousands of farmers who have grown their business exponentially!</p>
+    </div>
+    <button class="button" id="continue-btn">Continue</button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <ul>
+        <li>📧 Email: <a href="mihir220208@gmail.com">@helpanguthade</a></li>
+        <li>📞 Phone: <a href="tel:+911234567890">+91-9226033770</a></li>
+        <li>📸 Instagram: <a href="https://www.instagram.com/pungpungtung/">@pungpungpung</a></li>
+        <li>🐦 X (Twitter): <a href="https://twitter.com/anguthade">@anguthade</a></li>
+        <li>💬 WhatsApp: <a href="https://wa.me/911234567890">+91-9226033770</a></li>
+      </ul>
+    </div>
+    <div class="footer-copyright">
+      Made with ❤️ in India • GreenTap © 2025
+    </div>
+  </footer>
+
+  <script>
+    // Menu Toggle Functionality (same as main page)
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Shrinking header on scroll
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Section fade-in
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    sections.forEach(section => observer.observe(section));
+
+    // Export Flow
+    const exportBtn = document.getElementById('export-btn');
+    const whyModal = document.getElementById('why-modal');
+    const continueBtn = document.getElementById('continue-btn');
+    const kycSection = document.getElementById('kyc-section');
+    const kycForm = document.getElementById('kyc-form');
+    const educationalSection = document.getElementById('educational-section');
+    const startPlanningBtn = document.getElementById('start-planning-btn');
+    const planningSection = document.getElementById('planning-section');
+    const planningForm = document.getElementById('planning-form');
+    const chart = document.getElementById('chart');
+
+    exportBtn.addEventListener('click', () => {
+      whyModal.classList.add('active');
+      overlay.classList.add('active'); // Use existing overlay for modal
+    });
+
+    continueBtn.addEventListener('click', () => {
+      whyModal.classList.remove('active');
+      overlay.classList.remove('active');
+      kycSection.style.display = 'block';
+    });
+
+    kycForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Mock verification (in real app, send to server)
+      alert('KYC Verified Successfully!');
+      kycSection.style.display = 'none';
+      educationalSection.style.display = 'block';
+    });
+
+    startPlanningBtn.addEventListener('click', () => {
+      educationalSection.style.display = 'none';
+      planningSection.style.display = 'block';
+    });
+
+    planningForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // Mock chart update
+      chart.textContent = `Mock Chart: Goods available in ${planningForm.elements[0].value} for ${planningForm.elements[1].value} (e.g., High demand for Mangoes, Rice trends upward)`;
+    });
+  </script>
+
+</body>
+</html>
