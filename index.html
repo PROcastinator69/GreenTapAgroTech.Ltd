@@ -19,12 +19,13 @@
       background-color: #f8f9fa;
     }
 
-    /* Header with Glassy Effect */
+    /* Header with Glassy Effect - Fixed Height */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
+      height: 130px;
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
@@ -44,30 +45,35 @@
     .header-content {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 10px 20px;
+      height: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 15px;
     }
 
     .logo {
       display: flex;
       align-items: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: #2E7D32;
+      justify-content: flex-start; /* Align logo to the left */
+      height: 100%;
+      flex: 0 0 50%; /* Takes 50% of header width */
+      min-width: 400px;
     }
 
     .logo-img {
-      height: 40px;
-      width: auto;
-      margin-right: 10px;
+      height: 120px;
+      width: auto; /* Changed from 100% to auto to maintain aspect ratio */
+      max-width: 100%; /* Prevent overflow */
+      object-fit: contain;
+      margin-right: auto; /* Push to the left side */
     }
 
     .search-bar {
       flex: 1;
-      max-width: 500px;
-      margin: 0 30px;
+      max-width: 300px;
+      margin: 0;
       position: relative;
     }
 
@@ -113,6 +119,7 @@
       display: block;
       cursor: pointer;
       z-index: 1001;
+      flex-shrink: 0;
     }
 
     .hamburger span {
@@ -202,7 +209,7 @@
 
     /* Hero Slider */
     .slider {
-      margin-top: 80px;
+      margin-top: 130px;
       width: 100%;
       height: 400px;
       overflow: hidden;
@@ -545,20 +552,36 @@
 
     /* Responsive Design */
     @media (max-width: 768px) {
+      header {
+        height: 150px;
+      }
+
       .header-content {
         flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
+        gap: 5px;
+        padding: 10px 20px;
+      }
+
+      .logo {
+        flex: none;
+        width: 70%;
+        justify-content: center;
+        min-width: unset;
+      }
+
+      .logo-img {
+        height: 90px;
+        max-width: 300px;
       }
 
       .search-bar {
-        margin: 0;
         max-width: 100%;
+        width: 100%;
       }
 
       .slider {
         height: 300px;
-        margin-top: 120px;
+        margin-top: 150px;
       }
 
       .slide-overlay {
@@ -601,7 +624,7 @@
 
     @media (max-width: 480px) {
       .slider {
-        margin-top: 140px;
+        margin-top: 170px;
       }
 
       .categories-grid {
@@ -628,7 +651,6 @@
     <div class="header-content">
       <div class="logo">
         <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
-        GreenTap Agrotech
       </div>
 
       <div class="search-bar">
@@ -815,7 +837,7 @@
     <div class="container">
       <h2 class="cta-title">Ready to Transform Your Farming?</h2>
       <p class="cta-desc">Join thousands of farmers who are already earning passive income while contributing to sustainable agriculture. Get started today!</p>
-      <a href="knowwhat.html" class="cta-button">Get Started Now</a>
+      <a href="register.html" class="cta-button">Get Started Now</a>
     </div>
   </section>
 
@@ -827,7 +849,7 @@
           <h3>Contact Us</h3>
           <ul>
             <li><i class="fas fa-envelope"></i> mihir220208@gmail.com</li>
-            <li><i class="fas fa-phone"></i> +91-9226033770</li>
+            <li><a href="tel:+919226033770"><i class="fas fa-phone"></i> +91-9226033770</a></li>
             <li><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</li>
           </ul>
         </div>
