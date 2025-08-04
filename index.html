@@ -56,18 +56,18 @@
     .logo {
       display: flex;
       align-items: center;
-      justify-content: flex-start; /* Align logo to the left */
+      justify-content: flex-start;
       height: 100%;
-      flex: 0 0 50%; /* Takes 50% of header width */
+      flex: 0 0 50%;
       min-width: 400px;
     }
 
     .logo-img {
       height: 120px;
-      width: auto; /* Changed from 100% to auto to maintain aspect ratio */
-      max-width: 100%; /* Prevent overflow */
+      width: auto;
+      max-width: 100%;
       object-fit: contain;
-      margin-right: auto; /* Push to the left side */
+      margin-right: auto;
     }
 
     .search-bar {
@@ -113,6 +113,83 @@
     .search-btn:hover {
       background: linear-gradient(135deg, #1B5E20, #2E7D32);
       transform: translateY(-50%) scale(1.05);
+    }
+
+    /* Search Results Dropdown */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      max-height: 400px;
+      overflow-y: auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      display: none;
+      z-index: 1000;
+      margin-top: 5px;
+    }
+
+    .search-results.show {
+      display: block;
+    }
+
+    .search-result-item {
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .search-result-item:hover {
+      background: rgba(46, 125, 50, 0.1);
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #2E7D32, #4CAF50);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .search-result-content {
+      flex: 1;
+    }
+
+    .search-result-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .search-result-desc {
+      font-size: 14px;
+      color: #666;
+    }
+
+    .no-results {
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
     }
 
     .hamburger {
@@ -654,8 +731,13 @@
       </div>
 
       <div class="search-bar">
-        <input type="text" class="search-input" placeholder="Search for agricultural products...">
-        <button class="search-btn"><i class="fas fa-search"></i></button>
+        <input type="text" class="search-input" id="search-input" placeholder="Search for products, dealers, services...">
+        <button class="search-btn" id="search-btn"><i class="fas fa-search"></i></button>
+        
+        <!-- Search Results Dropdown -->
+        <div class="search-results" id="search-results">
+          <!-- Dynamic search results will appear here -->
+        </div>
       </div>
 
       <!-- Hamburger Trigger -->
@@ -673,6 +755,7 @@
     <a href="#how"><i class="fas fa-cogs"></i> How It Works</a>
     <a href="plans.html"><i class="fas fa-clipboard-list"></i> View Your Plans</a>
     <a href="marketplace.html"><i class="fas fa-store"></i> Market Place</a>
+    <a href="slide5.html"><i class="fas fa-handshake"></i> Dealers</a>
     <a href="export-hub.html"><i class="fas fa-globe"></i> Export Hub</a>
     <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
     <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
@@ -687,7 +770,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Discover Modern Farming</div>
           <div class="slide-desc">Transform your agricultural practices with our cutting-edge technology and expert guidance for maximum yield and sustainability.</div>
-          <button class="explore-btn" onclick="navigateToPage('slide1.html')">Explore Now</button>
+          <button class="explore-btn" onclick="navigateToPage('slide5.html')">Explore Now</button>
         </div>
       </div>
       <!-- Slide 2 -->
@@ -696,7 +779,7 @@
         <div class="slide-overlay">
           <div class="slide-title">Smart Agricultural Technology</div>
           <div class="slide-desc">Leverage AI-powered drones, precision irrigation, and real-time monitoring to revolutionize your farming operations.</div>
-          <button class="explore-btn" onclick="navigateToPage('slide2.html')">Learn More</button>
+          <button class="explore-btn" onclick="navigateToPage('knowwhat.html')">Learn More</button>
         </div>
       </div>
       <!-- Slide 3 -->
@@ -947,6 +1030,183 @@
         header.classList.add('scrolled');
       } else {
         header.classList.remove('scrolled');
+      }
+    });
+
+    // Search Database - Updated with slide5.html for dealers
+    const searchDatabase = {
+      products: [
+        { name: 'Tomatoes', icon: '🍅', category: 'Vegetables', desc: 'Fresh organic tomatoes - ₹50/kg', link: 'marketplace.html?search=tomatoes' },
+        { name: 'Potatoes', icon: '🥔', category: 'Vegetables', desc: 'High quality potatoes - ₹30/kg', link: 'marketplace.html?search=potatoes' },
+        { name: 'Onions', icon: '🧅', category: 'Vegetables', desc: 'Fresh onions - ₹35/kg', link: 'marketplace.html?search=onions' },
+        { name: 'Carrots', icon: '🥕', category: 'Vegetables', desc: 'Organic carrots - ₹40/kg', link: 'marketplace.html?search=carrots' },
+        { name: 'Spinach', icon: '🥬', category: 'Vegetables', desc: 'Fresh spinach - ₹30/bundle', link: 'marketplace.html?search=spinach' },
+        { name: 'Wheat Seeds', icon: '🌾', category: 'Seeds', desc: 'High yield wheat seeds - ₹200/pack', link: 'marketplace.html?search=wheat+seeds' },
+        { name: 'Rice Seeds', icon: '🌾', category: 'Seeds', desc: 'Premium rice seeds - ₹180/pack', link: 'marketplace.html?search=rice+seeds' },
+        { name: 'Corn Seeds', icon: '🌽', category: 'Seeds', desc: 'Sweet corn seeds - ₹150/pack', link: 'marketplace.html?search=corn+seeds' },
+        { name: 'Potato Seeds', icon: '🥔', category: 'Seeds', desc: 'Disease resistant potato seeds - ₹150/pack', link: 'marketplace.html?search=potato+seeds' },
+        { name: 'Organic Fertilizer', icon: '🌱', category: 'Fertilizers', desc: 'Eco-friendly fertilizer - ₹300/bag', link: 'marketplace.html?search=organic+fertilizer' },
+        { name: 'NPK Fertilizer', icon: '🌱', category: 'Fertilizers', desc: 'Balanced NPK fertilizer - ₹250/bag', link: 'marketplace.html?search=npk+fertilizer' },
+        { name: 'Compost Fertilizer', icon: '🌱', category: 'Fertilizers', desc: 'Natural compost - ₹200/bag', link: 'marketplace.html?search=compost' },
+        { name: 'Pesticides', icon: '🛡️', category: 'Pest Control', desc: 'Effective pest control solutions', link: 'marketplace.html?search=pesticides' },
+        { name: 'Irrigation Systems', icon: '💧', category: 'Equipment', desc: 'Smart irrigation solutions', link: 'marketplace.html?search=irrigation' },
+        { name: 'Farm Tools', icon: '🔧', category: 'Equipment', desc: 'Essential farming tools', link: 'marketplace.html?search=farm+tools' },
+        { name: 'Tractors', icon: '🚜', category: 'Equipment', desc: 'Modern farming tractors', link: 'marketplace.html?search=tractors' }
+      ],
+      dealers: [
+        { name: 'AgriSupply Pro', icon: '🏪', category: 'Seed Dealer', desc: 'Premium seeds and fertilizers supplier in Pune', link: 'slide5.html?dealer=agrisupply' },
+        { name: 'FarmTech Solutions', icon: '🏪', category: 'Equipment Dealer', desc: 'Agricultural machinery and equipment dealer', link: 'slide5.html?dealer=farmtech' },
+        { name: 'GreenGrow Distributors', icon: '🏪', category: 'Fertilizer Dealer', desc: 'Organic fertilizers and pesticides distributor', link: 'slide5.html?dealer=greengrow' },
+        { name: 'Krishak Mitra', icon: '🏪', category: 'General Dealer', desc: 'Complete agricultural supplies dealer', link: 'slide5.html?dealer=krishakmitra' },
+        { name: 'Bharat Seeds Co.', icon: '🏪', category: 'Seed Dealer', desc: 'Quality seeds for all crops', link: 'slide5.html?dealer=bharatseeds' },
+        { name: 'Agro Tools India', icon: '🏪', category: 'Tools Dealer', desc: 'Farm tools and equipment supplier', link: 'slide5.html?dealer=agrotools' },
+        { name: 'Maharashtra Fertilizers', icon: '🏪', category: 'Fertilizer Dealer', desc: 'Leading fertilizer distributor in Maharashtra', link: 'slide5.html?dealer=mahafertilizers' },
+        { name: 'Rural Equipment Hub', icon: '🏪', category: 'Equipment Dealer', desc: 'Complete range of farming equipment', link: 'slide5.html?dealer=ruralequipment' },
+        { name: 'Organic Farm Store', icon: '🏪', category: 'Organic Dealer', desc: 'Certified organic farming supplies', link: 'slide5.html?dealer=organicfarm' },
+        { name: 'Kisan Bazaar', icon: '🏪', category: 'General Dealer', desc: 'One-stop shop for all farming needs', link: 'slide5.html?dealer=kisanbazaar' }
+      ],
+      services: [
+        { name: 'Land Rental', icon: '🏞️', category: 'Service', desc: 'Rent your land to experienced farmers', link: 'plans.html' },
+        { name: 'Farm Management', icon: '📊', category: 'Service', desc: 'Professional farm management services', link: 'plans.html' },
+        { name: 'Crop Consultation', icon: '👨‍🌾', category: 'Service', desc: 'Expert agricultural consultation', link: 'knowwhat.html' },
+        { name: 'Export Services', icon: '🌍', category: 'Service', desc: 'Agricultural export assistance', link: 'export-hub.html' },
+        { name: 'Soil Testing', icon: '🧪', category: 'Service', desc: 'Professional soil analysis services', link: 'plans.html' },
+        { name: 'Irrigation Setup', icon: '💧', category: 'Service', desc: 'Modern irrigation system installation', link: 'marketplace.html?service=irrigation' },
+        { name: 'Weather Monitoring', icon: '🌤️', category: 'Service', desc: 'Real-time weather tracking for farms', link: 'knowwhat.html' },
+        { name: 'Pest Management', icon: '🐛', category: 'Service', desc: 'Integrated pest management solutions', link: 'marketplace.html?service=pest' }
+      ]
+    };
+
+    // Search Functionality
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    const searchResults = document.getElementById('search-results');
+
+    let searchTimeout;
+
+    // Search on input
+    searchInput.addEventListener('input', function() {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        performSearch(this.value);
+      }, 300);
+    });
+
+    // Search on button click
+    searchBtn.addEventListener('click', function() {
+      performSearch(searchInput.value);
+    });
+
+    // Search on Enter key
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        performSearch(this.value);
+      }
+    });
+
+    function performSearch(query) {
+      if (query.trim().length === 0) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = searchInDatabase(query.toLowerCase());
+      displaySearchResults(results, query);
+    }
+
+    function searchInDatabase(query) {
+      const allItems = [
+        ...searchDatabase.products,
+        ...searchDatabase.dealers,
+        ...searchDatabase.services
+      ];
+
+      const matches = allItems.filter(item => {
+        return (
+          item.name.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.desc.toLowerCase().includes(query)
+        );
+      });
+
+      return matches;
+    }
+
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        // Check if search is agriculture-related
+        const agricultureKeywords = [
+          'agriculture', 'farming', 'crop', 'plant', 'soil', 'harvest', 'cultivation',
+          'organic', 'fertilizer', 'pesticide', 'irrigation', 'tractor', 'farm',
+          'seeds', 'vegetables', 'fruits', 'grain', 'livestock', 'dairy', 'poultry',
+          'dealer', 'supplier', 'distributor', 'shop', 'store', 'equipment', 'tools'
+        ];
+
+        const isAgricultureRelated = agricultureKeywords.some(keyword => 
+          query.toLowerCase().includes(keyword)
+        );
+
+        if (isAgricultureRelated) {
+          searchResults.innerHTML = `
+            <div class="no-results">
+              <div style="margin-bottom: 10px; font-size: 18px;">🔍</div>
+              <strong>Not found in our database</strong><br>
+              We don't have "${query}" in our current listings, but we're constantly expanding our network. 
+              <br><br>
+              <span style="color: #2E7D32;">Try searching for similar items or browse our marketplace and dealers!</span>
+            </div>
+          `;
+        } else {
+          searchResults.innerHTML = `
+            <div class="no-results">
+              <div style="margin-bottom: 10px; font-size: 18px;">❌</div>
+              <strong>Not agriculture-related</strong><br>
+              We specialize in agricultural products, dealers, and services. 
+              <br><br>
+              <span style="color: #2E7D32;">Try searching for: seeds, fertilizers, farm equipment, vegetables, dealers, or farming services!</span>
+            </div>
+          `;
+        }
+      } else {
+        results.forEach(result => {
+          const resultItem = document.createElement('div');
+          resultItem.className = 'search-result-item';
+          resultItem.onclick = () => {
+            window.location.href = result.link;
+            searchResults.classList.remove('show');
+            searchInput.value = '';
+          };
+
+          resultItem.innerHTML = `
+            <div class="search-result-icon">
+              ${result.icon}
+            </div>
+            <div class="search-result-content">
+              <div class="search-result-title">${result.name}</div>
+              <div class="search-result-desc">${result.desc}</div>
+            </div>
+          `;
+
+          searchResults.appendChild(resultItem);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Hide search results when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.search-bar')) {
+        searchResults.classList.remove('show');
+      }
+    });
+
+    // Show search results when focusing on input
+    searchInput.addEventListener('focus', function() {
+      if (this.value.trim().length > 0) {
+        performSearch(this.value);
       }
     });
   </script>
