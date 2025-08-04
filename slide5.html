@@ -3,121 +3,221 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dealers List - GreenTap</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet" />
+  <title>Dealers List - GreenTap Agrotech</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
     html, body {
       font-family: 'Roboto', sans-serif;
-      color: #fff;
       scroll-behavior: smooth;
+      background-color: #f8f9fa;
     }
 
-    body {
-      min-height: 100vh;
-      background: url('https://wallpaperaccess.com/full/5595412.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(2px);
-      z-index: 0;
-    }
-
+    /* Header with Glassy Effect - Fixed Height */
     header {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 20px 40px;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(4px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      height: 130px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       z-index: 999;
       transition: all 0.3s ease;
     }
 
     header.scrolled {
-      padding: 10px 40px;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      transition: transform 0.3s;
-    }
-
-    .logo:hover {
-      transform: scale(1.1);
-    }
-
-    .nav-links {
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 20px;
+      height: 100%;
       display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 15px;
     }
 
-    .nav-links a {
-      color: #fff;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.1);
-      transition: 0.3s ease;
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100%;
+      flex: 0 0 50%;
+      min-width: 400px;
     }
 
-    .nav-links a:hover {
-      background: rgba(255, 255, 255, 0.25);
+    .logo-img {
+      height: 120px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      margin-right: auto;
+    }
+
+    .hamburger {
+      display: block;
+      cursor: pointer;
+      z-index: 1001;
+      flex-shrink: 0;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #2E7D32;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* Navigation Menu with Glassy Effect */
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 320px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 100px 20px 20px;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+
+    .nav-menu.active {
+      transform: translateX(0);
+    }
+
+    .nav-menu a {
+      color: #333;
+      text-decoration: none;
+      padding: 15px 20px;
+      margin-bottom: 10px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      display: block;
+      font-weight: 500;
+    }
+
+    .nav-menu a:hover {
+      background: rgba(46, 125, 50, 0.1);
+      border-color: rgba(46, 125, 50, 0.3);
+      color: #2E7D32;
+      transform: translateX(-5px);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 999;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-top: 130px;
+      padding: 40px 20px 80px;
     }
 
     .dealers-section {
-      position: relative;
-      z-index: 2;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(3px);
-      padding: 80px 40px;
       max-width: 1200px;
-      margin: 100px auto 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: 20px;
     }
 
     .section-title {
-      font-size: 32px;
-      margin-bottom: 20px;
-      border-left: 4px solid #2E7D32;
-      padding-left: 12px;
-      text-transform: uppercase;
+      font-size: 36px;
+      margin-bottom: 30px;
+      color: #333;
+      font-weight: 700;
+      text-align: center;
+      border-bottom: 3px solid #2E7D32;
+      padding-bottom: 15px;
     }
 
     .dealers-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
     }
 
     .dealer-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-radius: 20px;
+      padding: 25px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer; /* Indicates clickability */
+      transition: all 0.3s;
+      cursor: pointer;
     }
 
     .dealer-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(46, 125, 50, 0.3);
     }
 
     .dealer-img {
@@ -125,178 +225,559 @@
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      border: 3px solid #2E7D32;
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.2);
     }
 
     .dealer-name {
-      font-size: 20px;
-      margin-bottom: 5px;
-      color: #90EE90;
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: #2E7D32;
+      font-weight: 600;
       text-decoration: none;
       transition: color 0.3s;
     }
 
     .dealer-name:hover {
-      color: #4CAF50;
+      color: #1B5E20;
     }
 
     .dealer-business {
       font-size: 16px;
-      margin-bottom: 5px;
-      color: #ddd;
+      margin-bottom: 8px;
+      color: #666;
+      font-weight: 500;
     }
 
     .dealer-contact {
       font-size: 14px;
-      margin-bottom: 10px;
-      color: #bbb;
+      margin-bottom: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
     .dealer-rating {
       font-size: 16px;
-      margin-bottom: 10px;
-      color: #FFD700; /* Gold for stars */
+      margin-bottom: 15px;
+      color: #FFD700;
+      font-weight: 500;
+    }
+
+    .dealer-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .button {
       padding: 10px 20px;
       border: none;
       border-radius: 20px;
-      background: #2E7D32;
+      background: linear-gradient(135deg, #2E7D32, #4CAF50);
       color: white;
       font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      margin: 5px;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .button:hover {
-      background: #1B5E20;
-      transform: scale(1.05);
+      background: linear-gradient(135deg, #1B5E20, #2E7D32);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(46, 125, 50, 0.3);
     }
 
+    .button.secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: #2E7D32;
+      border: 2px solid #2E7D32;
+    }
+
+    .button.secondary:hover {
+      background: rgba(46, 125, 50, 0.1);
+      color: #1B5E20;
+    }
+
+    /* Footer */
     footer {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 40px 20px;
+      background: rgba(51, 51, 51, 0.95);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      color: white;
+      padding: 60px 0 20px;
+      margin-top: 80px;
+    }
+
+    .footer-contact {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
       text-align: center;
-      color: #bbb;
-      font-size: 14px;
-      position: relative;
-      z-index: 3;
+    }
+
+    .footer-contact h3 {
+      font-size: 24px;
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+
+    .footer-contact ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-contact li {
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    .footer-contact a {
+      color: #4CAF50;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-contact a:hover {
+      color: #90EE90;
     }
 
     .footer-copyright {
-      margin-top: 20px;
+      text-align: center;
       font-size: 14px;
       color: #bbb;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      padding-top: 20px;
     }
 
-    @media (max-width: 600px) {
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        height: 150px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: 5px;
+        padding: 10px 20px;
+      }
+
+      .logo {
+        flex: none;
+        width: 70%;
+        justify-content: center;
+        min-width: unset;
+      }
+
+      .logo-img {
+        height: 90px;
+        max-width: 300px;
+      }
+
+      .main-content {
+        margin-top: 150px;
+        padding: 20px 15px;
+      }
+
+      .dealers-section {
+        padding: 20px;
+      }
+
       .dealers-list {
         grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .nav-menu {
+        width: 280px;
+      }
+
+      .footer-contact ul {
+        flex-direction: column;
+        gap: 15px;
       }
     }
 
-    .logo-img {
-      height: 80px;
-      width: auto;
-      margin-right: 10px;
-      transform: scale(1.8);
-      transform-origin: left center;
-      object-fit: contain;
-      background: transparent;
+    @media (max-width: 480px) {
+      .main-content {
+        margin-top: 170px;
+      }
+
+      .dealer-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- Overlay for Menu -->
+  <div class="overlay" id="overlay"></div>
+
   <!-- HEADER -->
   <header id="main-header">
-    <div class="logo">
-      <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
-    </div>
+    <div class="header-content">
+      <div class="logo">
+        <img src="greenTap__2_-removebg-preview.png" alt="GreenTap Agrotech Logo" class="logo-img">
+      </div>
 
-    <div class="nav-links">
-      <a href="index.html">Home</a> <!-- Assuming your main page is index.html -->
-      <a href="#why">Why</a>
-      <a href="#how">How</a>
-      <a href="plans.html">View Your Plans</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoT19AVvS03gqckTyHEzwdIMgMrWTxqdD-VBPCDXYScERsQ/viewform?usp=dialog" target="_blank">Join Us</a> <!-- Placeholder for Google Form -->
+      <!-- Hamburger Trigger -->
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </header>
 
-  <!-- DEALERS SECTION -->
-  <section class="dealers-section">
-    <div class="section-title">List of Dealers</div>
-    <div class="dealers-list">
-      <!-- Existing Dealers 1-15 (omitted for brevity; include your original cards here) -->
-      <!-- New Dealer 16 -->
-      <div class="dealer-card" data-id="16">
-        <img src="https://randomuser.me/api/portraits/men/16.jpg" alt="Sanjay Bose" class="dealer-img">
-        <div class="dealer-name">Sanjay Bose</div>
-        <div class="dealer-business">Livestock Feed Supplier</div>
-        <div class="dealer-contact">+91-9876543216</div>
-        <div class="dealer-rating">★★★★☆ (4.3/5)</div>
-        <button class="button" onclick="rateDealer(16)">Rate</button>
-        <button class="button" onclick="addToPlans(16, 'Sanjay Bose', 'Livestock Feed Supplier')">Add to Plans</button>
+  <!-- Sliding Menu Bar -->
+  <nav class="nav-menu" id="nav-menu">
+    <a href="index.html"><i class="fas fa-home"></i> Home</a>
+    <a href="index.html#why"><i class="fas fa-question-circle"></i> Why Choose Us</a>
+    <a href="index.html#how"><i class="fas fa-cogs"></i> How It Works</a>
+    <a href="plans.html"><i class="fas fa-clipboard-list"></i> View Your Plans</a>
+    <a href="marketplace.html"><i class="fas fa-store"></i> Market Place</a>
+    <a href="slide5.html"><i class="fas fa-handshake"></i> Dealers</a>
+    <a href="export-hub.html"><i class="fas fa-globe"></i> Export Hub</a>
+    <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+    <a href="register.html"><i class="fas fa-user-plus"></i> Register</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdcoT19AVvS03gqckTyHEzwdIMgMrWTxqdD-VBPCDXYScERsQ/viewform?usp=dialog" target="_blank"><i class="fas fa-user-plus"></i> Join Us</a>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <!-- DEALERS SECTION -->
+    <section class="dealers-section">
+      <div class="section-title">Our Trusted Dealers</div>
+      <div class="dealers-list">
+        
+        <!-- Dealer 1 -->
+        <div class="dealer-card" data-id="1">
+          <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Rajesh Kumar" class="dealer-img">
+          <div class="dealer-name">Rajesh Kumar</div>
+          <div class="dealer-business">Seeds & Fertilizers</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-9876543201</div>
+          <div class="dealer-rating">★★★★★ (4.8/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(1)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(1, 'Rajesh Kumar', 'Seeds & Fertilizers')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 2 -->
+        <div class="dealer-card" data-id="2">
+          <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="Priya Sharma" class="dealer-img">
+          <div class="dealer-name">Priya Sharma</div>
+          <div class="dealer-business">Organic Pesticides</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-8765432102</div>
+          <div class="dealer-rating">★★★★☆ (4.5/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(2)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(2, 'Priya Sharma', 'Organic Pesticides')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 3 -->
+        <div class="dealer-card" data-id="3">
+          <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="Amit Patel" class="dealer-img">
+          <div class="dealer-name">Amit Patel</div>
+          <div class="dealer-business">Farm Equipment</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-7654321003</div>
+          <div class="dealer-rating">★★★★★ (4.9/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(3)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(3, 'Amit Patel', 'Farm Equipment')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 4 -->
+        <div class="dealer-card" data-id="4">
+          <img src="https://randomuser.me/api/portraits/women/4.jpg" alt="Sunita Gupta" class="dealer-img">
+          <div class="dealer-name">Sunita Gupta</div>
+          <div class="dealer-business">Irrigation Systems</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-6543210904</div>
+          <div class="dealer-rating">★★★★☆ (4.2/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(4)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(4, 'Sunita Gupta', 'Irrigation Systems')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 5 -->
+        <div class="dealer-card" data-id="5">
+          <img src="https://randomuser.me/api/portraits/men/5.jpg" alt="Vikram Singh" class="dealer-img">
+          <div class="dealer-name">Vikram Singh</div>
+          <div class="dealer-business">Dairy Equipment</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-5432109805</div>
+          <div class="dealer-rating">★★★★★ (4.7/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(5)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(5, 'Vikram Singh', 'Dairy Equipment')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 6 -->
+        <div class="dealer-card" data-id="6">
+          <img src="https://randomuser.me/api/portraits/women/6.jpg" alt="Meera Yadav" class="dealer-img">
+          <div class="dealer-name">Meera Yadav</div>
+          <div class="dealer-business">Vegetable Seeds</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-4321098706</div>
+          <div class="dealer-rating">★★★★☆ (4.4/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(6)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(6, 'Meera Yadav', 'Vegetable Seeds')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 7 -->
+        <div class="dealer-card" data-id="7">
+          <img src="https://randomuser.me/api/portraits/men/7.jpg" alt="Ravi Verma" class="dealer-img">
+          <div class="dealer-name">Ravi Verma</div>
+          <div class="dealer-business">Tractors & Harvesters</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-3210987607</div>
+          <div class="dealer-rating">★★★★★ (4.6/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(7)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(7, 'Ravi Verma', 'Tractors & Harvesters')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 8 -->
+        <div class="dealer-card" data-id="8">
+          <img src="https://randomuser.me/api/portraits/women/8.jpg" alt="Kavita Joshi" class="dealer-img">
+          <div class="dealer-name">Kavita Joshi</div>
+          <div class="dealer-business">Poultry Supplies</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-2109876508</div>
+          <div class="dealer-rating">★★★★☆ (4.1/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(8)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(8, 'Kavita Joshi', 'Poultry Supplies')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 9 -->
+        <div class="dealer-card" data-id="9">
+          <img src="https://randomuser.me/api/portraits/men/9.jpg" alt="Suresh Reddy" class="dealer-img">
+          <div class="dealer-name">Suresh Reddy</div>
+          <div class="dealer-business">Crop Protection</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-1098765409</div>
+          <div class="dealer-rating">★★★★★ (4.5/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(9)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(9, 'Suresh Reddy', 'Crop Protection')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 10 -->
+        <div class="dealer-card" data-id="10">
+          <img src="https://randomuser.me/api/portraits/women/10.jpg" alt="Anita Desai" class="dealer-img">
+          <div class="dealer-name">Anita Desai</div>
+          <div class="dealer-business">Greenhouse Solutions</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-0987654310</div>
+          <div class="dealer-rating">★★★★☆ (4.3/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(10)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(10, 'Anita Desai', 'Greenhouse Solutions')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 11 -->
+        <div class="dealer-card" data-id="11">
+          <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="Manoj Kumar" class="dealer-img">
+          <div class="dealer-name">Manoj Kumar</div>
+          <div class="dealer-business">Soil Testing Equipment</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-9876543211</div>
+          <div class="dealer-rating">★★★★★ (4.8/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(11)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(11, 'Manoj Kumar', 'Soil Testing Equipment')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 12 -->
+        <div class="dealer-card" data-id="12">
+          <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="Rekha Nair" class="dealer-img">
+          <div class="dealer-name">Rekha Nair</div>
+          <div class="dealer-business">Hydroponics Systems</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-8765432112</div>
+          <div class="dealer-rating">★★★★☆ (4.4/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(12)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(12, 'Rekha Nair', 'Hydroponics Systems')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 13 -->
+        <div class="dealer-card" data-id="13">
+          <img src="https://randomuser.me/api/portraits/men/13.jpg" alt="Deepak Agarwal" class="dealer-img">
+          <div class="dealer-name">Deepak Agarwal</div>
+          <div class="dealer-business">Beekeeping Supplies</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-7654321013</div>
+          <div class="dealer-rating">★★★★★ (4.7/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(13)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(13, 'Deepak Agarwal', 'Beekeeping Supplies')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 14 -->
+        <div class="dealer-card" data-id="14">
+          <img src="https://randomuser.me/api/portraits/women/14.jpg" alt="Seema Rani" class="dealer-img">
+          <div class="dealer-name">Seema Rani</div>
+          <div class="dealer-business">Fish Farming Equipment</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-6543210914</div>
+          <div class="dealer-rating">★★★★☆ (4.2/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(14)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(14, 'Seema Rani', 'Fish Farming Equipment')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 15 -->
+        <div class="dealer-card" data-id="15">
+          <img src="https://randomuser.me/api/portraits/men/15.jpg" alt="Arjun Mishra" class="dealer-img">
+          <div class="dealer-name">Arjun Mishra</div>
+          <div class="dealer-business">Weather Monitoring Systems</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-5432109815</div>
+          <div class="dealer-rating">★★★★★ (4.9/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(15)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(15, 'Arjun Mishra', 'Weather Monitoring Systems')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 16 -->
+        <div class="dealer-card" data-id="16">
+          <img src="https://randomuser.me/api/portraits/men/16.jpg" alt="Sanjay Bose" class="dealer-img">
+          <div class="dealer-name">Sanjay Bose</div>
+          <div class="dealer-business">Livestock Feed Supplier</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-9876543216</div>
+          <div class="dealer-rating">★★★★☆ (4.3/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(16)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(16, 'Sanjay Bose', 'Livestock Feed Supplier')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 17 -->
+        <div class="dealer-card" data-id="17">
+          <img src="https://randomuser.me/api/portraits/women/17.jpg" alt="Pooja Chatterjee" class="dealer-img">
+          <div class="dealer-name">Pooja Chatterjee</div>
+          <div class="dealer-business">Greenhouse Materials</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-8765432117</div>
+          <div class="dealer-rating">★★★★★ (4.7/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(17)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(17, 'Pooja Chatterjee', 'Greenhouse Materials')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 18 -->
+        <div class="dealer-card" data-id="18">
+          <img src="https://randomuser.me/api/portraits/men/18.jpg" alt="Vivek Das" class="dealer-img">
+          <div class="dealer-name">Vivek Das</div>
+          <div class="dealer-business">Water Pumps</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-7654321018</div>
+          <div class="dealer-rating">★★★☆☆ (3.9/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(18)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(18, 'Vivek Das', 'Water Pumps')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 19 -->
+        <div class="dealer-card" data-id="19">
+          <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="Rina Sen" class="dealer-img">
+          <div class="dealer-name">Rina Sen</div>
+          <div class="dealer-business">Compost Suppliers</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-6543210919</div>
+          <div class="dealer-rating">★★★★☆ (4.0/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(19)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(19, 'Rina Sen', 'Compost Suppliers')">Add to Plans</button>
+          </div>
+        </div>
+
+        <!-- Dealer 20 -->
+        <div class="dealer-card" data-id="20">
+          <img src="https://randomuser.me/api/portraits/men/20.jpg" alt="Amit Roy" class="dealer-img">
+          <div class="dealer-name">Amit Roy</div>
+          <div class="dealer-business">Farm Consulting Services</div>
+          <div class="dealer-contact"><i class="fas fa-phone"></i> +91-5432109820</div>
+          <div class="dealer-rating">★★★★★ (4.6/5)</div>
+          <div class="dealer-buttons">
+            <button class="button" onclick="rateDealer(20)">Rate Dealer</button>
+            <button class="button secondary" onclick="addToPlans(20, 'Amit Roy', 'Farm Consulting Services')">Add to Plans</button>
+          </div>
+        </div>
+
       </div>
-      <!-- New Dealer 17 -->
-      <div class="dealer-card" data-id="17">
-        <img src="https://randomuser.me/api/portraits/women/17.jpg" alt="Pooja Chatterjee" class="dealer-img">
-        <div class="dealer-name">Pooja Chatterjee</div>
-        <div class="dealer-business">Greenhouse Materials</div>
-        <div class="dealer-contact">+91-8765432117</div>
-        <div class="dealer-rating">★★★★★ (4.7/5)</div>
-        <button class="button" onclick="rateDealer(17)">Rate</button>
-        <button class="button" onclick="addToPlans(17, 'Pooja Chatterjee', 'Greenhouse Materials')">Add to Plans</button>
-      </div>
-      <!-- New Dealer 18 -->
-      <div class="dealer-card" data-id="18">
-        <img src="https://randomuser.me/api/portraits/men/18.jpg" alt="Vivek Das" class="dealer-img">
-        <div class="dealer-name">Vivek Das</div>
-        <div class="dealer-business">Water Pumps</div>
-        <div class="dealer-contact">+91-7654321018</div>
-        <div class="dealer-rating">★★★☆☆ (3.9/5)</div>
-        <button class="button" onclick="rateDealer(18)">Rate</button>
-        <button class="button" onclick="addToPlans(18, 'Vivek Das', 'Water Pumps')">Add to Plans</button>
-      </div>
-      <!-- New Dealer 19 -->
-      <div class="dealer-card" data-id="19">
-        <img src="https://randomuser.me/api/portraits/women/19.jpg" alt="Rina Sen" class="dealer-img">
-        <div class="dealer-name">Rina Sen</div>
-        <div class="dealer-business">Compost Suppliers</div>
-        <div class="dealer-contact">+91-6543210919</div>
-        <div class="dealer-rating">★★★★☆ (4.0/5)</div>
-        <button class="button" onclick="rateDealer(19)">Rate</button>
-        <button class="button" onclick="addToPlans(19, 'Rina Sen', 'Compost Suppliers')">Add to Plans</button>
-      </div>
-      <!-- New Dealer 20 -->
-      <div class="dealer-card" data-id="20">
-        <img src="https://randomuser.me/api/portraits/men/20.jpg" alt="Amit Roy" class="dealer-img">
-        <div class="dealer-name">Amit Roy</div>
-        <div class="dealer-business">Farm Consulting Services</div>
-        <div class="dealer-contact">+91-5432109820</div>
-        <div class="dealer-rating">★★★★★ (4.6/5)</div>
-        <button class="button" onclick="rateDealer(20)">Rate</button>
-        <button class="button" onclick="addToPlans(20, 'Amit Roy', 'Farm Consulting Services')">Add to Plans</button>
-      </div>
-    </div>
-  </section>
+    </section>
+  </div>
 
   <!-- FOOTER -->
   <footer>
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <ul>
+        <li><i class="fas fa-envelope"></i> mihir220208@gmail.com</li>
+        <li><a href="tel:+919226033770"><i class="fas fa-phone"></i> +91-9226033770</a></li>
+        <li><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra</li>
+      </ul>
+      <ul>
+        <li><a href="https://www.instagram.com/pungpungtung/"><i class="fab fa-instagram"></i> Instagram</a></li>
+        <li><a href="https://twitter.com/anguthade"><i class="fab fa-twitter"></i> Twitter</a></li>
+        <li><a href="https://wa.me/919226033770"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+      </ul>
+    </div>
     <div class="footer-copyright">
-      Made with ❤️ in India • GreenTap © 2025
+      <p>&copy; 2025 GreenTap Agrotech. Made with ❤️ in India. All rights reserved.</p>
     </div>
   </footer>
 
   <script>
-    // Shrinking header on scroll
+    // Menu Toggle Functionality
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const overlay = document.getElementById('overlay');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navMenu.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Enhanced scroll effect for glassy header
     window.addEventListener('scroll', () => {
       const header = document.getElementById('main-header');
-      header.classList.toggle('scrolled', window.scrollY > 60);
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
     });
 
     // Make entire dealer cards clickable
@@ -332,6 +813,24 @@
         alert('Invalid rating. Please enter a number between 1 and 5.');
       }
     }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Close menu if open
+          hamburger.classList.remove('active');
+          navMenu.classList.remove('active');
+          overlay.classList.remove('active');
+        }
+      });
+    });
   </script>
 
 </body>
